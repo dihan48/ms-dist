@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HTML5 Canvas Port</title>
+<style>
+html,body{margin:0;min-height:100%;background:#05070b;color:#ddd;font-family:"Courier New",Consolas,monospace}
+body{display:flex;justify-content:center;align-items:center;box-sizing:border-box;padding:12px;overflow:hidden;overscroll-behavior:none}
+.wrap{display:flex;flex-direction:column;align-items:center;gap:12px;max-width:100vw;max-height:100vh}
+.playfield{display:flex;flex-direction:column;align-items:center;gap:12px;max-width:100%;max-height:100%}
+.stage{position:relative;display:inline-block}
+canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;background:#000;border:1px solid rgba(255,255,255,.12);border-radius:12px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.keys{font-size:12px;line-height:1.35;background:rgba(15,17,22,.85);border:1px solid rgba(255,255,255,.12);padding:10px 12px;max-width:min(100vw - 24px, 360px);white-space:pre-wrap;border-radius:12px}
+.touch-controls{display:flex;flex-direction:column;gap:10px;width:min(100vw - 24px, 720px);padding:10px;background:rgba(10,12,18,.82);border:1px solid rgba(255,255,255,.12);border-radius:18px;box-shadow:0 18px 50px rgba(0,0,0,.35);backdrop-filter:blur(8px);touch-action:none;user-select:none;-webkit-user-select:none}
+.touch-controls .row{display:grid;gap:8px}
+.touch-controls .pad{grid-template-columns:repeat(3,minmax(54px,1fr))}
+.touch-controls .soft{grid-template-columns:repeat(2,minmax(0,1fr))}
+.touch-controls button{appearance:none;border:1px solid rgba(255,255,255,.14);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));color:#fff;font:700 14px/1.05 "Courier New",Consolas,monospace;min-height:68px;padding:8px 4px;touch-action:none;user-select:none;-webkit-user-select:none;white-space:pre-line;letter-spacing:.02em}
+.touch-controls button:active,.touch-controls button.is-held{transform:translateY(1px);filter:brightness(1.18)}
+.touch-controls button[data-key="50"],.touch-controls button[data-key="52"],.touch-controls button[data-key="53"],.touch-controls button[data-key="54"],.touch-controls button[data-key="56"]{background:linear-gradient(180deg,rgba(86,196,255,.28),rgba(86,196,255,.12));border-color:rgba(86,196,255,.45)}
+.touch-controls button[data-soft]{background:linear-gradient(180deg,rgba(255,191,92,.24),rgba(255,191,92,.12));border-color:rgba(255,191,92,.42)}
+body.touch-device .keys{display:none}
+@media (min-width:900px) and (min-height:540px){
+body{align-items:center}
+.wrap{width:min(100vw - 24px,1200px)}
+.playfield{flex-direction:row;align-items:center;justify-content:center;gap:16px}
+.touch-controls{width:min(260px,32vw);max-height:100%;margin-left:0}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="playfield">
+<div class="stage">
+<canvas id="game" width="240" height="320"></canvas>
+</div>
+<div class="touch-controls" aria-label="Виртуальная клавиатура">
+<div class="row pad">
+<button type="button" data-key="49">1</button>
+<button type="button" data-key="50">2
+UP</button>
+<button type="button" data-key="51">3</button>
+<button type="button" data-key="52">4
+LEFT</button>
+<button type="button" data-key="53">5
+FIRE</button>
+<button type="button" data-key="54">6
+RIGHT</button>
+<button type="button" data-key="55">7</button>
+<button type="button" data-key="56">8
+DOWN</button>
+<button type="button" data-key="57">9</button>
+<button type="button" data-key="42">*</button>
+<button type="button" data-key="48">0</button>
+<button type="button" data-key="35">#</button>
+</div>
+<div class="row soft">
+<button type="button" data-soft="left">LEFT
+SOFT</button>
+<button type="button" data-soft="right">RIGHT
+SOFT</button>
+</div>
+<div class="keys">Управление:
+W = 2, A = 4, S = 8, D = 6
+Space = 5, E = 0
+Tab = Right Soft, Esc = Left Soft
+R = 7, X = 9, Q = 1, F = 3
+Z = *, C = #</div>
+</div>
+</div>
+</div>
+<script src="game.bundle.js"></script>
+</body>
+</html>
